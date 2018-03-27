@@ -16,6 +16,14 @@ const cheerio = require('cheerio');
 const searchJson = {}
 const h1Sign = '----h1----'
 
+function objToArr(obj){
+  var arr = []
+  for(var i in obj){
+    obj[i] && arr.push(obj[i])
+  }
+  return arr;
+}
+
 function getContent(childNodes, $, url){
   if(!childNodes)return []
   let children = {};
@@ -33,7 +41,7 @@ function getContent(childNodes, $, url){
       children[curParent] = {
         title: child.text(),
         url: url + '#' + curParent,
-        content: ''
+        content: child.text()
       }
     }else if(curParent){
       if(curParent === h1Sign){
@@ -44,7 +52,7 @@ function getContent(childNodes, $, url){
   
   return {
     content: content,
-    children: children
+    children: objToArr(children)
   };
   
 }
