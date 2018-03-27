@@ -89,6 +89,15 @@ module.exports = {
 
   assets: {
     dir: './assets',
-    js: ['core.js', 'search.js']
+    js: ['core.js', 'search.js'],
+    css: 'search.css'
+  },
+
+  "tpl:header": function() {
+    return `<div class="m-search">
+      <div class="icon">&#xf0fd;</div>
+      <input type="text" class="input js-input" placeholder="搜索文档内容" />
+      <div class="m-search-result js-search-result"></div>
+    </div>`;
   }
 }
