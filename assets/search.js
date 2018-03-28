@@ -2,6 +2,11 @@ $(function(){
   var $searchResult = $('.js-search-result'),
       $searchInput = $('.js-input');
 
+  // 去除空格
+  String.prototype.trim = function () {
+    return this.replace(/(^\s*)|(\s*$)/g, '');
+  };
+
   // 判断是否为空对象
   function realObj(obj) {
     for (var i in obj) {
@@ -24,7 +29,7 @@ $(function(){
 
   // 监听输入的内容
   $searchInput.on('input', debounce(function(e) {
-    var val = e.target.value,
+    var val = e.target.value.trim(),
         res = window.ydoc_plugin_search_core(val);
     
     $searchResult.show();
@@ -53,5 +58,13 @@ $(function(){
   // $searchInput
   $searchInput.on('blur', function(e) {
     $searchResult.hide();
-  })
+  });
+
+  // ESCAPE key pressed
+  $(document).on('keydown', function (e) {
+    if (e.keyCode == 27) {
+      $searchInput[0].value = '';
+      $searchResult.hide();
+    }
+  });
 })
