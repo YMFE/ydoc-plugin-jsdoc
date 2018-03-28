@@ -7,7 +7,6 @@
 }
 .m-search-result {
   display: none;
-  width: 400px;
   position: absolute;
   width: 100vw;
   right: -.64rem;
@@ -24,7 +23,6 @@
   top: 16px;
   transform: translate(-50%, -50%);
   font-size: 18px;
-  /* font-weight: bold; */
 }
 .m-search .input {
   width: 150px;
@@ -75,7 +73,7 @@
   .m-search-result {
     position: absolute;
     right: 0;
-    width: 400px;
+    width: 4rem;
   }
 }
 
