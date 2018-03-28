@@ -2,12 +2,17 @@ $(function() {
   var num = 0;
   var searchText;
   var searchMaxNum = 8;
+  var releativePath = document.getElementById('releativePath').getAttribute('content') || ''
+  releativePath = releativePath.trim()
+  releativePath = releativePath === '' ? '.' : releativePath
+
   window.ydoc_plugin_search_core = function(text) {
     if(!text)return;
     var json = cloneObject(window.ydoc_plugin_search_json);    
     searchText = text;
     num = 0;
     var result = search(json)
+    console.log(result)
     return result;
   };
 
@@ -66,13 +71,13 @@ $(function() {
         searchPage = {
           title: page.title,
           content: page.content,
-          url: page.url,
+          url: releativePath + page.url,
           children: []
         };
       }else{
         searchPage = {
           title: page.title,
-          url: page.url,
+          url: releativePath + page.url,
           children: []
         };
       }
@@ -86,6 +91,7 @@ $(function() {
             return newPages;
           }
           if(child.content && child.content.toLowerCase().indexOf(searchText.toLowerCase()) !== -1){
+            child.url = releativePath + child.url;
             searchPage.children.push(child)
             num++;          
           }
