@@ -1,14 +1,16 @@
 .m-search {
   position: absolute;
-  right: .32rem;
+  right: .64rem;
   top: .32rem;
   transform: translateY(-50%);
+  z-index: 9999;
 }
 .m-search-result {
   display: none;
   width: 400px;
   position: absolute;
-  right: 0;
+  width: 100vw;
+  right: -.64rem;
   top: .64rem;
   background-color: #fff;
   border-radius: 4px;
@@ -21,6 +23,8 @@
   left: 16px;
   top: 16px;
   transform: translate(-50%, -50%);
+  font-size: 18px;
+  /* font-weight: bold; */
 }
 .m-search .input {
   width: 150px;
@@ -64,4 +68,20 @@
 }
 .m-search .caption-title {
   padding: .04rem 0;
+}
+
+/* 宽度小于 600px 时搜索结果横贯屏幕宽度 */
+@media screen and (min-width: 600px) {
+  .m-search-result {
+    position: absolute;
+    right: 0;
+    width: 400px;
+  }
+}
+
+/* PC 端不显示 nav 按钮 因此更靠右侧 */
+@media screen and (min-width: 960px) {
+  .m-search {
+    right: .24rem;
+  }
 }
