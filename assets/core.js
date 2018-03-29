@@ -12,7 +12,6 @@ $(function() {
     searchText = text;
     num = 0;
     var result = search(json)
-    console.log(result)
     return result;
   };
 

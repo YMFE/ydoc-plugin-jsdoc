@@ -24,6 +24,14 @@ function objToArr(obj){
   return arr;
 }
 
+function filterHTMLTag(msg) {
+  if(typeof msg !== 'string') return ''
+  msg = msg.replace(/<\/?[^>]*>/g, ''); //去除HTML Tag
+  msg = msg.replace(/[|]*\n/, '') //去除行尾空格
+  msg = msg.replace(/&npsp;/ig, ''); //去掉npsp
+  return msg;
+}
+
 function getContent(childNodes, $, url){
   if(!childNodes)return []
   let children = {};
@@ -39,14 +47,14 @@ function getContent(childNodes, $, url){
     }else if(tagName === 'h2' || tagName === 'h3'){
       curParent = child.attr('id')
       children[curParent] = {
-        title: child.text(),
+        title: filterHTMLTag(child.text()),
         url: url + '#' + curParent,
-        content: child.text()
+        content: filterHTMLTag(child.text())
       }
     }else if(curParent){
       if(curParent === h1Sign){
-        content += (child.text() || '')
-      }else children[curParent].content += (child.text() || '');
+        content += (filterHTMLTag(child.text()) || '')
+      }else children[curParent].content += (filterHTMLTag(child.text()) || '');
     }
   }
   
