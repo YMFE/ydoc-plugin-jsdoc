@@ -71,7 +71,7 @@ $(function(){
     }
   }, 300));
 
-  // $searchInput
+  // 关闭搜索结果
   $searchInput.on('blur', function(e) {
     $searchResult.hide();
   });
