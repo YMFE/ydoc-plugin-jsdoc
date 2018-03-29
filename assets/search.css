@@ -10,11 +10,15 @@
   position: absolute;
   width: 100vw;
   right: -.64rem;
-  top: .64rem;
+  top: .48rem;
   background-color: #fff;
   border-radius: 4px;
   box-shadow: 0 50px 100px rgba(50, 50, 93, 0.1), 0 15px 35px rgba(50, 50, 93, 0.15), 0 5px 15px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+}
+.m-search .highlight {
+  font-weight: bold;
+  color: #1890ff;
 }
 .m-search .icon {
   font-family: ydoc;
@@ -50,13 +54,18 @@
 }
 .m-search .row {
   display: flex;
-  align-items: flex-start;
   margin: .08rem 0;
 }
 .m-search .subtitle {
   flex: 0 0 25%;
   text-align: right;
   padding: .04rem .08rem;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all .2s;
+}
+.m-search .subtitle:hover {
+  background-color: #f6f8fa;
 }
 .m-search .content {
   flex: 1;
@@ -64,8 +73,20 @@
   border-left: 1px solid rgba(3, 17, 31, 0.14);
   padding: 0 .08rem;
 }
-.m-search .caption-title {
+.m-search .caption {
   padding: .04rem 0;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all .2s;
+}
+.m-search .caption:hover {
+  background-color: #f6f8fa;
+}
+.m-search .caption .title {
+
+}
+.m-search .caption .desc {
+  font-weight: normal;
 }
 
 /* 宽度小于 600px 时搜索结果横贯屏幕宽度 */

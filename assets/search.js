@@ -27,27 +27,43 @@ $(function(){
     };
   }
 
+  var highlightTextPrevNum = 6;
+  var highlightTextNextNum = 20;
+  // 简化文本内容长度
+  function simplifyStrDom(str, val) {
+    var index = str.indexOf(val);
+    var startIndex = index > highlightTextPrevNum ? index - highlightTextPrevNum : 0;
+    var sliceStr = str.slice(startIndex, index + val.length + highlightTextNextNum);
+    var addHighlightStr = sliceStr.replace(val, '<span class="highlight">' + val + '</span>');
+    var ellipsis = (sliceStr.lastIndexOf(val) != -1) || (sliceStr.lastIndexOf(val) > highlightTextNextNum) ? '...' : '';
+    return addHighlightStr + ellipsis;
+  }
+
   // 监听输入的内容
   $searchInput.on('input', debounce(function(e) {
     var val = e.target.value.trim(),
         res = window.ydoc_plugin_search_core(val);
     
     $searchResult.show();
-
     if (realObj(res) || val === '') {
       var dom = '';
       for (var key in res) {
         dom += `<div class="headline">${key}</div>`;
-        res[key].forEach(function(item, index) {
+        res[key].forEach(function(item) {
           var contentDom = '';
-          item.children.forEach(function(item, index) {
-            contentDom += `<div class="caption-title">${item.title}</div>`;
-          })
+          item.children.forEach(function(i) {
+            i.title = simplifyStrDom(i.title, val);
+            i.content = simplifyStrDom(i.content, val);
+            contentDom += `<div class="caption" onclick="window.open('${i.url}', '_self')">
+                <div class="title">${i.title}</div>
+                <div class="desc">${i.content}</div>
+              </div>`;
+          });
           dom += `<div class="row">
-            <div class="subtitle">${item.title}</div>
+            <div class="subtitle" onclick="window.open('${item.url}', '_self')">${item.title}</div>
             <div class="content">${contentDom}</div>
-          </div>`
-        })
+          </div>`;
+        });
       }
       $searchResult.html(dom);
     } else {
