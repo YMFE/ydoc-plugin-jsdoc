@@ -1,6 +1,7 @@
 $(function(){
   var $searchResult = $('.js-search-result'),
-      $searchInput = $('.js-input');
+      $searchInput = $('.js-input'),
+      activeIndex = 0;
 
   // 去除空格
   String.prototype.trim = function () {
@@ -39,11 +40,19 @@ $(function(){
     return addHighlightStr + ellipsis;
   }
 
+  // 隐藏搜索结果框
+  function hideSearchResult() {
+    $searchResult.hide();
+  }
+
   // 监听输入的内容
   $searchInput.on('input', debounce(function(e) {
     var val = e.target.value.trim(),
         res = window.ydoc_plugin_search_core(val);
+    
+    activeIndex = 0;
     console.log(res);
+    $(document).off('keydown');
     $searchResult.show();
     if (realObj(res) || val === '') {
       var dom = '';
@@ -73,6 +82,34 @@ $(function(){
         });
       }
       $searchResult.html(dom);
+
+      var $captions = $('.js-search-result .caption');
+      var length = $captions.length;
+      if ($captions.length) {
+        $captions[activeIndex].classList.add('active');
+        // 监听键盘事件 up: 38, down: 40, enter: 13
+        $(document).on('keydown', function (e) {
+          console.log(e.keyCode);
+          if (e.keyCode == 38) {
+            $captions[activeIndex].classList.remove('active');
+            activeIndex = (activeIndex + length - 1) % length;
+            $captions[activeIndex].classList.add('active');
+          } else if (e.keyCode == 40) {
+            $captions[activeIndex].classList.remove('active');
+            activeIndex = (activeIndex + 1) % length;
+            $captions[activeIndex].classList.add('active');
+          } else if (e.keyCode == 13) {
+            window.open($captions[activeIndex].href, '_self');
+          }
+        });
+      }
+      // 按下 ESC 键，清空输入框并收起搜索结果框
+      $(document).on('keydown', function (e) {
+        if (e.keyCode == 27) {
+          $searchInput[0].value = '';
+          $searchResult.hide();
+        }
+      });
     } else {
       $searchResult.html('<div class="empty">没有找到关键词 <b>' + val + '</b> 的搜索结果</div>')
     }
@@ -80,16 +117,11 @@ $(function(){
 
   // 关闭搜索结果
   $searchInput.on('blur', function(e) {
+    console.log('blru');
     setTimeout(function() {
-      // $searchResult.hide();
+      $searchResult.hide();
     }, 300);
   });
 
-  // ESCAPE key pressed
-  $(document).on('keydown', function (e) {
-    if (e.keyCode == 27) {
-      $searchInput[0].value = '';
-      $searchResult.hide();
-    }
-  });
+
 })

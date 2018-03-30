@@ -84,6 +84,9 @@
 .m-search .caption:hover {
   background-color: #f6f8fa;
 }
+.m-search .caption.active {
+  background-color: #f6f8fa;
+}
 .m-search .caption .title {
 
 }
