@@ -43,7 +43,7 @@ $(function(){
   $searchInput.on('input', debounce(function(e) {
     var val = e.target.value.trim(),
         res = window.ydoc_plugin_search_core(val);
-    
+    console.log(res);
     $searchResult.show();
     if (realObj(res) || val === '') {
       var dom = '';
@@ -51,13 +51,21 @@ $(function(){
         dom += '<div class="headline">' + key + '</div>';
         res[key].forEach(function(item) {
           var contentDom = '';
-          item.children.forEach(function(i) {
-            i.title = simplifyStrDom(i.title, val);
-            i.content = simplifyStrDom(i.content, val);
-            contentDom += '<a class="caption" href="' + i.url + '">'+
-              '<div class="title">' + i.title + '</div>' +
-              '<div class="desc">' + i.content + '</div></a>';
-          });
+          if (item.children.length) {
+            item.children.forEach(function (i) {
+              i.title = simplifyStrDom(i.title, val);
+              i.content = simplifyStrDom(i.content, val);
+              contentDom += '<a class="caption" href="' + i.url + '">' +
+                '<div class="title">' + i.title + '</div>' +
+                '<div class="desc">' + i.content + '</div></a>';
+            });
+          } else {
+            item.title = simplifyStrDom(item.title, val);
+            item.content = simplifyStrDom(item.content, val);
+            contentDom = '<a class="caption" href="' + item.url + '">' +
+              '<div class="title">' + item.title + '</div>' +
+              '<div class="desc">' + item.content + '</div></a>';
+          }
           dom += '<div class="row">' + 
             '<a class="subtitle" href="' + item.url + '">' + item.title + '</a>' + 
             '<div class="content">' + contentDom + '</div>' + 
@@ -73,8 +81,8 @@ $(function(){
   // 关闭搜索结果
   $searchInput.on('blur', function(e) {
     setTimeout(function() {
-      $searchResult.hide();
-    }, 100);
+      // $searchResult.hide();
+    }, 300);
   });
 
   // ESCAPE key pressed
