@@ -71,11 +71,17 @@ $(function(){
   }, 300));
 
   // 关闭搜索结果
-  $searchInput.on('blur', function(e) {
-    setTimeout(function() {
-      $searchResult.hide();
-    }, 100);
-  });
+  // $searchInput.on('blur', function(e) {
+  //   $searchResult.hide();
+  // });
+
+  $searchResult.on('click', function(e){
+    return false;
+  })
+
+  $(document).on('click', function(e){
+    $searchResult.hide();
+  })
 
   // ESCAPE key pressed
   $(document).on('keydown', function (e) {
