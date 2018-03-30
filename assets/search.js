@@ -116,12 +116,17 @@ $(function(){
   }, 300));
 
   // 关闭搜索结果
-  $searchInput.on('blur', function(e) {
-    console.log('blru');
-    setTimeout(function() {
-      $searchResult.hide();
-    }, 300);
-  });
+  // $searchInput.on('blur', function(e) {
+  //   $searchResult.hide();
+  // });
+
+  $searchResult.on('click', function(e){
+    return false;
+  })
+
+  $(document).on('click', function(e){
+    $searchResult.hide();
+  })
 
 
 })
