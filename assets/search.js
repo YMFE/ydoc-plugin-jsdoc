@@ -72,7 +72,9 @@ $(function(){
 
   // 关闭搜索结果
   $searchInput.on('blur', function(e) {
-    $searchResult.hide();
+    setTimeout(function() {
+      $searchResult.hide();
+    }, 100);
   });
 
   // ESCAPE key pressed
