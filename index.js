@@ -104,7 +104,7 @@ module.exports = {
   "tpl:header": function() {
     return `<div class="m-search">
       <div class="icon">&#xf0fd;</div>
-      <input type="text" class="input js-input" placeholder="搜索文档内容" />
+      <input type="text" class="input js-input" placeholder="搜索" />
       <div class="m-search-result js-search-result"></div>
     </div>`;
   }
