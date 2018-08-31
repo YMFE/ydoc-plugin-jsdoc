@@ -42,9 +42,9 @@ $(function(){
   }
 
   // 隐藏搜索结果框
-  function hideSearchResult() {
-    $searchResult.hide();
-  }
+  // function hideSearchResult() {
+  //   $searchResult.hide();
+  // }
 
   // 监听输入的内容
   $searchInput.on('input', debounce(function(e) {
